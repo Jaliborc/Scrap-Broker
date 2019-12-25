@@ -15,38 +15,37 @@ along with the addon. If not, see <http://www.gnu.org/licenses/gpl-3.0.txt>.
 This file is part of Scrap Broker.
 --]]
 
-local L = Scrap_Locals
 local Broker = Scrap:NewModule('Broker', LibStub('LibDataBroker-1.1'):NewDataObject('Scrap', {
-	type = 'data source',
-	tocname = ...,
+	type = 'data source', tocname = ...
 }))
 
-
---[[ Events ]]--
-
 function Broker:OnEnable()
+	for k,v in pairs(Scrap.Merchant) do
+		if type(v) == 'function' then
+			self[k] = self[k] or v
+		end
+	end
+
+	self.OnEnter, self.OnLeave = nil
 	self:RegisterEvent('BAG_UPDATE', 'OnUpdate')
 	self:RegisterSignal('LIST_CHANGED', 'OnUpdate')
+	self:OnUpdate()
 end
 
 function Broker:OnUpdate()
-	local value = Scrap:GetJunkValue()
+	local value = self:GetReport()
 	self.icon = format('Interface/Addons/Scrap/art/%s-icon', value > 0 and 'enabled' or 'disabled')
 	self.text = GetMoneyString(value, true)
 end
 
 function Broker:OnClick(button)
-	if MerchantFrame:IsShown() or button ~= 'RightButton' then
-		--Scrap.Merchant:OnClick(button, self)
+	if MerchantFrame:IsShown() and button ~= 'RightButton' then
+		Scrap.Merchant.OnClick(Broker, button)
 	else
 		Scrap:DestroyJunk()
 	end
 end
 
-function Broker:OnReceiveDrag()
-	--Scrap.Merchant:OnReceiveDrag()
-end
-
 function Broker:OnTooltipShow()
-	--Scrap:ShowTooltip(self, not MerchantFrame:IsShown() and L.DeleteJunk or L.SellJunk)
+	Broker:UpdateTip(self)
 end
