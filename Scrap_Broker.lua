@@ -1,5 +1,5 @@
 --[[
-Copyright 2010-2016 João Cardoso
+Copyright 2010-2019 João Cardoso
 Scrap Broker is distributed under the terms of the GNU General Public License (Version 3).
 As a special exception, the copyright holders of this addon do not give permission to
 redistribute and/or modify it.
@@ -16,78 +16,37 @@ This file is part of Scrap Broker.
 --]]
 
 local L = Scrap_Locals
-local Launcher = LibStub('LibDataBroker-1.1'):NewDataObject('Scrap', {
+local Broker = Scrap:NewModule('Broker', LibStub('LibDataBroker-1.1'):NewDataObject('Scrap', {
 	type = 'data source',
 	tocname = ...,
-})
-
-StaticPopupDialogs['DELETE_SCRAP'] = {
-	text = L.ConfirmDelete,
-	button1 = OKAY,
-	button2 = CANCEL,
-	OnAccept = function()
-		for bag, slot, id in Scrap:IterateJunk() do
-			PickupContainerItem(bag, slot)
-			DeleteCursorItem()
-		end
-	end,
-
-	hideOnEscape = 1, showAlert = 1,
-	exclusive = 1, whileDead = 1,
-	preferredIndex = STATICPOPUP_NUMDIALOGS,
-	timeout = 0
-}
+}))
 
 
---[[ API ]]--
+--[[ Events ]]--
 
-function Launcher:Startup()
-	-- Event --
-	local frame = CreateFrame('Frame')
-	frame:RegisterEvent('BAG_UPDATE')
-	frame:SetScript('OnEvent', function()
-		self:Update()
-	end)
-
-	-- Hook --
-	local UpdateState = Scrap.UpdateButtonState
-	function Scrap.UpdateButtonState(...)
-		UpdateState(...)
-		self:Update()
-	end
+function Broker:OnEnable()
+	self:RegisterEvent('BAG_UPDATE', 'OnUpdate')
+	self:RegisterSignal('LIST_CHANGED', 'OnUpdate')
 end
 
-function Launcher:Update()
+function Broker:OnUpdate()
 	local value = Scrap:GetJunkValue()
-	if value > 0 then
-		self.icon = 'Interface\\Addons\\Scrap\\Art\\Enabled Icon'
-	else
-		self.icon = 'Interface\\Addons\\Scrap\\Art\\Disabled Icon'
-	end
-
+	self.icon = format('Interface/Addons/Scrap/art/%s-icon', value > 0 and 'enabled' or 'disabled')
 	self.text = GetMoneyString(value, true)
 end
 
-
---[[ Scripts ]]--
-
-function Launcher:OnClick(button)
-	if MerchantFrame:IsShown() or button == 'RightButton' then
-		Scrap:OnClick(button, self)
+function Broker:OnClick(button)
+	if MerchantFrame:IsShown() or button ~= 'RightButton' then
+		--Scrap.Merchant:OnClick(button, self)
 	else
-		StaticPopup_Show('DELETE_SCRAP')
+		Scrap:DestroyJunk()
 	end
 end
 
-function Launcher:OnReceiveDrag()
-	Scrap:OnReceiveDrag()
+function Broker:OnReceiveDrag()
+	--Scrap.Merchant:OnReceiveDrag()
 end
 
-function Launcher:OnTooltipShow()
-	Scrap:OnTooltipShow(not MerchantFrame:IsShown() and L.DeleteJunk)
+function Broker:OnTooltipShow()
+	--Scrap:ShowTooltip(self, not MerchantFrame:IsShown() and L.DeleteJunk or L.SellJunk)
 end
-
-
---[[ Load Addon ]]--
-
-Launcher:Startup()
