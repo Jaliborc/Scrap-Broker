@@ -1,4 +1,4 @@
-## Interface: 80200
+## Interface: 11303
 ## Title: |cffFFDE73Scrap Broker|r
 ## Notes: A DataBroker launcher for Scrap
 
