@@ -1,3 +1,17 @@
+##### 10.0.2
+* Wrath TOC update.
+
+##### 10.0.1
+* Updated for latest Scrap version.
+* Updated for new recommended style for Scrap plugins in the addon list (must update Scrap to look correct).
+
+#### 10.0.0
+* Updated for Dragonflight.
+* Now destroys cheapest item on retail servers, as destroy all junk is now blocked by blizzard.
+
+#### 9.1.0
+* Updated for Chains of Domination.
+
 #### 8.3.0
 * Updated for Visions of Nzoth.
 
