@@ -1,18 +1,5 @@
 --[[
-Copyright 2010-2023 João Cardoso
-Scrap Broker is distributed under the terms of the GNU General Public License (Version 3).
-As a special exception, the copyright holders of this addon do not give permission to
-redistribute and/or modify it.
-
-This addon is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with the addon. If not, see <http://www.gnu.org/licenses/gpl-3.0.txt>.
-
-This file is part of Scrap Broker.
+	All Rights Reserved
 --]]
 
 local Broker = Scrap:NewModule('Broker', LibStub('LibDataBroker-1.1'):NewDataObject('Scrap', {
@@ -34,13 +21,13 @@ end
 
 function Broker:OnUpdate()
 	local value = self:GetReport()
-	self.icon = 'interface/addons/scrap/art/scrap-' .. (value > 0 and 'enabled' or 'disabled')
+	self.icon = 'interface/addons/scrap/art/scrap-small' .. (value > 0 and '' or '-disabled')
 	self.text = GetMoneyString(value, true)
 end
 
 function Broker:OnClick(button)
 	if Scrap.Merchant:IsVisible() or button == 'RightButton' then
-		Scrap.Merchant.OnClick(Broker, button)
+		Scrap.Merchant.OnClick(self, button)
 	else
 		Scrap:DestroyCheapest()
 	end
