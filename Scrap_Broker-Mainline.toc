@@ -6,8 +6,8 @@
 ## X-Category: Bags & Inventory
 
 ## Dependencies: Scrap_Merchant
-## Interface: 100207
-## Version: 10.2.1
+## Interface: 110005
+## Version: 11
 
 libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 Scrap_Broker.lua
