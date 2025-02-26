@@ -1,3 +1,7 @@
+### 11.1
+* Retail: Updated for the "Undermined" game patch and Scrap 11.1.
+* Retail: Added support for the new addon list native grouping capabilities.
+
 ## 11
 * TOC update
 

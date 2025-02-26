@@ -1,4 +1,5 @@
 --[[
+	Copyright 2008-2025 João Cardoso
 	All Rights Reserved
 --]]
 
@@ -6,7 +7,7 @@ local Broker = Scrap:NewModule('Broker', LibStub('LibDataBroker-1.1'):NewDataObj
 	type = 'data source', tocname = ...
 }))
 
-function Broker:OnEnable()
+function Broker:OnLoad()
 	for k,v in pairs(Scrap.Merchant) do
 		if type(v) == 'function' then
 			self[k] = self[k] or v
@@ -34,5 +35,5 @@ function Broker:OnClick(button)
 end
 
 function Broker:OnTooltipShow()
-	Broker:UpdateTip(self)
+	Scrap.Merchant:UpdateTip(self)
 end
