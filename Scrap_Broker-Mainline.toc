@@ -7,8 +7,8 @@
 ## Group: Scrap
 
 ## Dependencies: Scrap_Merchant
-## Interface: 110200
-## Version: 11.2
+## Interface: 110205
+## Version: 11.2.1
 
 libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 Scrap_Broker.lua
