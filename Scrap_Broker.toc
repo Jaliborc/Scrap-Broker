@@ -5,8 +5,8 @@
 ## Category: Bags & Inventory
 
 ## Dependencies: Scrap_Merchant
-## Interface: 120001, 110207, 50501, 40402, 30404, 20505, 11507
-## Version: 11.2.2
+## Interface: 120001, 120000, 50501, 40402, 30404, 20505, 11507
+## Version: 12.0.0
 
 libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
 libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
